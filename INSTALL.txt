@@ -9,11 +9,28 @@ To use the "saml2sp" app, you must download and install these libraries:
 - M2Crypto @ http://chandlerproject.org/bin/view/Projects/MeTooCrypto
 - PySAML @ http://github.com/tachang/PySAML
 
+UBUNTU Packages
+===============
+M2Crypto is also available as a system package for Ubuntu (at least on 9.10).
+The name is 'python-m2crypto'. You can use the "Synaptic Package Manager" or
+the "apt-get" command-line program to install it.
+
 FOR PRE-EXISTING PROJECTS
 =========================
 For existing projects, you will also need to:
 - Enable the Django auth system. (http://docs.djangoproject.com/en/dev/topics/auth/)
 - Download and install the "saml2sp" app from this project site.
+- Add this line to your top-level urlpatterns (in urls.py usually):
+
+    urlpatterns = patterns('',
+    ...
+        (r'^sp/', include('saml2sp.urls')),
+    ...
+    )
+- Enable Web SSO login: Add or update this setting in settings.py:
+
+    LOGIN_URL = '/sp/sso/login/'
+
 
 FOR THE INCLUDED SAMPLE PROJECT
 ===============================
@@ -23,6 +40,23 @@ You can download it and run it as-is, using standard Django commands:
 $ cd path/to/sptest
 $ python manage.py syncdb
 $ python manage.py runserver
+
+OpenSSL Key and Certificate Files
+=================================
+OpenSSL signing requires creation of a key and a certificate file. The "keys"
+folder contains the "mk_keys.sh" Bash Script, which will walk you through the
+process.  (Sorry, I don't have any help for non-linux users, but I would be
+happy to include it, if someone contributes it.)
+
+You can turn on the "signing" feature by adding this entry to your settings.py:
+
+    SAML2IDP_SIGNING = True
+    SAML2IDP_PRIVATE_KEY_FILE = '/absolute/path/to/private-key.pem'
+    SAML2IDP_CERTIFICATE_FILE = '/absolute/path/to/certificate.pem'
+
+When signing is enabled, the "saml2idp" views will be signed with the key and
+the certificate; in other words, this Identity Provider will identify itself
+much more securely.
 
 INTEGRATION WITH django-saml2-idp
 ================================
