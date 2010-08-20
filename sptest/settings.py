@@ -97,3 +97,5 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     'saml2sp',
 )
+
+LOGIN_URL = '/sp/sso/login/'

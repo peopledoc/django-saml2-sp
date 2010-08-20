@@ -1,5 +1,7 @@
 {% extends "saml2sp/base.html" %}
 
 {% block content %}
-You are now signed in at the Service Point.
+You are now signed in at the Service Point.<br />
+You may continue to your original destination here:<br />
+<a href="{{ sso_destination }}">{{ sso_destination }}</a>
 {% endblock content %}
