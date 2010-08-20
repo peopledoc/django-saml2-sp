@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_view_exempt
 import saml2sp_settings
-import codex
 
 def _get_email_from_assertion(assertion):
     """ Returns the email out of the assertion. """
@@ -54,7 +53,7 @@ def sso_login(request):
     }
     return render_to_response('saml2sp/sso_post_request.html', tv)
 
-@csrf_exempt
+@csrf_view_exempt
 def sso_response(request):
     #TODO: Only allow this view to accept POSTs from trusted sites.
     #sso_session = request.session.get('sso_destination', None),
