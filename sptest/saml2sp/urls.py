@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from views import sso_login
+from views import sso_login, sso_response
 
 urlpatterns = patterns('',
     # Example:
@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     # (r'^admin/', include(admin.site.urls)),
 
     (r'^sso/login/', sso_login),
+    (r'^sso/post/response/$', sso_response),
 )
