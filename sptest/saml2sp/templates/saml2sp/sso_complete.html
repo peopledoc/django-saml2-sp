@@ -1,6 +1,11 @@
 {% extends "saml2sp/base.html" %}
 
 {% block content %}
+Welcome, {{ user.username }}!<br />
+The Identity Provider returned this assertion:<br />
+<textarea rows="40" cols="80">
+{{ assertion }}
+</textarea><br />
 You are now signed in at the Service Point.<br />
 You may continue to your original destination here:<br />
 <a href="{{ sso_destination }}">{{ sso_destination }}</a>
