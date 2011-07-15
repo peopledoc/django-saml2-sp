@@ -23,6 +23,10 @@ DATABASES = {
     }
 }
 
+# For Django < 1.2, these legacy settings are necessary:
+DATABASE_ENGINE = 'sqlite3'
+DATABASE_NAME = DATABASES['default']['NAME']
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
