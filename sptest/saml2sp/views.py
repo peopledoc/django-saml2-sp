@@ -7,7 +7,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
+import codex
 import saml2sp_settings
+
 
 #TODO: Pull IDP choices from a model. For now, just use the one from the settings.
 IDP_CHOICES = (
