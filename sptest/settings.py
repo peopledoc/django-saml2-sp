@@ -100,4 +100,4 @@ INSTALLED_APPS = (
     'saml2sp',
 )
 
-LOGIN_URL = '/sp/sso/login/'
+LOGIN_URL = '/sp/sso/idpselect/'

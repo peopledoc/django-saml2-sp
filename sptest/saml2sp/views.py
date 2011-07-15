@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
 import saml2sp_settings
@@ -72,13 +73,14 @@ def sso_idp_select(request):
         form = IdpSelectionForm(request.POST)
         if form.is_valid():
             idp_request_url = form.cleaned_data['idp']
-            sso_login(request, idp_request_url)
+            return sso_login(request, idp_request_url)
     else:
         form = IdpSelectionForm()
     tv = {
         'form': form,
     }
-    return render_to_response('saml2sp/sso_idp_selection.html', tv)
+    return render_to_response('saml2sp/sso_idp_selection.html', tv,
+        context_instance=RequestContext(request))
 
 
 @csrf_view_exempt
