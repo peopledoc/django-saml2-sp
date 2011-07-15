@@ -64,17 +64,5 @@ A reference Identity Provider has been implementated in the django-saml2-idp pro
 at http://code.google.com/p/django-saml2-idp/. (Or will be soon.)
 
 You can run that sample project at the same time as the sample project here.
-You can even run them using Django's built-in test server, like this:
 
-In the first terminal window:
-$ cd path/to/idptest/
-$ python manage.py runserver 8000
-
-In the second terminal window:
-$ cd path/to/sptest/
-$ python manage.py runserver 9000
-
-You can browse to the Service Point @ http://127.0.0.1:9000/ to get the flow
-started. Make sure to watch the output in each window, to see the order of
-message flow.
-
+See the INSTALL.txt file in the django-saml2-idp project for more information.
