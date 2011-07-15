@@ -1,4 +1,5 @@
 from xml.dom.minidom import parseString
+from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -6,6 +7,13 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
 import saml2sp_settings
+
+#TODO: Pull IDP choices from a model. For now, just use the one from the settings.
+IDP_CHOICES = (
+    (saml2sp_settings.IDP_REQUEST_URL, saml2sp_settings.IDP_REQUEST_URL),
+)
+class IdpSelectionForm(forms.Form):
+    idp = forms.ChoiceField(choices=IDP_CHOICES)
 
 def _get_email_from_assertion(assertion):
     """ Returns the email out of the assertion. """
@@ -40,21 +48,44 @@ def _get_user_from_assertion(assertion):
                         password=saml2sp_settings.SAML_USER_PASSWORD)
     return user
 
-def sso_login(request):
+def sso_login(request, request_url):
+    """
+    Replies with an XHTML SSO Request.
+    """
     sso_destination = request.GET.get('next', None)
     request.session['sso_destination'] = sso_destination
     request = 'TODO'
     token = sso_destination
     tv = {
-        'request_url': saml2sp_settings.IDP_REQUEST_URL,
+        'request_url': request_url, #saml2sp_settings.IDP_REQUEST_URL,
         'request': request,
         'token': token,
         'next': sso_destination,
     }
     return render_to_response('saml2sp/sso_post_request.html', tv)
 
+def sso_idp_select(request):
+    """
+    Allows the user to select an IDP.
+    """
+    if request.method == 'POST':
+        form = IdpSelectionForm(request.POST)
+        if form.is_valid():
+            idp_request_url = form.cleaned_data['idp']
+            sso_login(request, idp_request_url)
+    else:
+        form = IdpSelectionForm()
+    tv = {
+        'form': form,
+    }
+    return render_to_response('saml2sp/sso_idp_selection.html', tv)
+
+
 @csrf_view_exempt
 def sso_response(request):
+    """
+    Handles a POSTed SSO Assertion and logs the user in.
+    """
     #TODO: Only allow this view to accept POSTs from trusted sites.
     #sso_session = request.session.get('sso_destination', None),
     sso_session = request.POST.get('RelayState', None)
@@ -71,6 +102,10 @@ def sso_response(request):
 
 @login_required
 def sso_test(request):
+    """
+    Exposes a simple resource that requires authentication,
+    so that we can kick-off the SAML conversation.
+    """
     tv = {
         'session': request.session,
     }

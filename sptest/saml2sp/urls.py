@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from views import sso_login, sso_response, sso_test
+from views import sso_response, sso_test, sso_idp_select
 
 urlpatterns = patterns('',
     # Example:
@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
 
-    (r'^sso/login/$', sso_login),
-    (r'^sso/post/response/$', sso_response),
     (r'^sso/test/$', sso_test),
+    (r'^sso/idpselect/$', sso_idp_select),
+    (r'^sso/post/response/$', sso_response),
 )

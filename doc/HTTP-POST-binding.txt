@@ -9,26 +9,64 @@ Dotted numbers are my attempt to fill in the gaps where things are unspecified.
 HOW IT WORKS - STEP BY STEP
 ===========================
 NOTE: All replies go to the Browser.
+URLs should work for the INTEGRATION setup described in INSTALL.txt:
+- The Identity Provider <IDP> is at http://localhost:8000
+- The Service Point <SP> is at http://localhost:9000
 
 1 - Browser sends GET request for Resource to SP.
+    * GET http://localhost:9000/sp/sso/test/
+
 1.1 - SP determines that User is not logged in. (No cookie, I guess.)
-1.2 - SP replies to with IDP selection form.
+
+1.2 - SP replies with IDP selection form.
+    * REDIRECT TO: http://localhost:9000/sp/sso/idpselect/
+
 1.3 - Browser POSTs IDP selection to SP.
+    * POST http://localhost:9000/sp/sso/idpselect/
+
 2 - SP replies with XHTML SSO Request Form.
+    * REPLY http://localhost:9000/sp/sso/idpselect/
+
 3 - Browser POSTs SSO Request Form to IDP.
+    * POST http://localhost:8000/idp/sso/request/
+    (NOTE: This URL comes from saml2sp_settings.IDP_REQUEST_URL.)
+
 3.1 - IDP determines that User is not logged in. (No cookie, I guess.)
+
 3.2 - IDP replies with Login Form.
+    * REDIRECT TO: http://localhost:8000/accounts/login
+
 3.3 - Browser POSTs Login Form to IDP.
+    * POST http://localhost:8000/accounts/login
+
 3.4 - IDP checks credentials and logs in User. (Sets a cookie, I guess.)
+
 4 - IDP replies with XHTML SSO Assertion Form.
+    * REDIRECT TO: http://localhost:8000/idp/sso/response/
+    (NOTE: That URL comes from idptest.settings.LOGIN_REDIRECT_URL.)
+
 5 - Browser POSTs SSO Assertion to SP.
+    * POST http://localhost:9000/sso/post/response/
+    (NOTE: This URL comes from saml2idp_settings.SP_RESPONSE_URL.)
+
 5.1 - SP verifies that the Assertion is valid.
+
 5.2 - SP verifies that the User account is/can be Provisioned. (HOW?)
+
 5.3 - SP logs in the User. (Sets a cookie, I guess.)
+
 6 - SP replies with an HTTP Redirect (redirecting to the Resource).
+    * REPLY http://localhost:9000/sso/post/response/
+    - or, maybe -
+    * REDIRECT TO http://localhost:9000/sp/sso/test/
+
 7 - Browser sends GET request for Resource to SP (second time).
+    * GET http://localhost:9000/sp/sso/test/
+
 7.1 - SP determines that the User is logged in. (Cookie is valid.)
+
 8 - SP replies with the Resource.
+    * REPLY http://localhost:9000/sp/sso/test/
 
 ABOUT METADATA
 ==============
