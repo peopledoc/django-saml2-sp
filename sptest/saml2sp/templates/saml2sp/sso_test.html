@@ -3,4 +3,6 @@
 {% block content %}
 You shouldn't be able to see this page without first logging in.
 {{ session }}
+<hr>
+<a href="{% url logout_url %}">Logout</a>
 {% endblock content %}
