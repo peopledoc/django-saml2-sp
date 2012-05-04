@@ -1,3 +1,4 @@
+#XXX: Use svn:externals to get the same version as in saml2idp???
 #Borrowed from:
 # http://stackoverflow.com/questions/1089662/python-inflate-and-deflate-implementations
 import zlib
