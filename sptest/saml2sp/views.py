@@ -1,4 +1,7 @@
+# Python imports
+import base64
 from xml.dom.minidom import parseString
+# Django imports
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -7,8 +10,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
+# Local imports
 import codex
 import saml2sp_settings
+import xml_render
 
 
 #TODO: Pull IDP choices from a model. For now, just use the one from the settings.
@@ -57,7 +62,8 @@ def sso_login(request, request_url):
     """
     sso_destination = request.GET.get('next', None)
     request.session['sso_destination'] = sso_destination
-    request = 'TODO'
+    #TODO: Finish this:
+    request = get_authnrequest_xml(parameters, signed=False)
     token = sso_destination
     tv = {
         'request_url': request_url, #saml2sp_settings.IDP_REQUEST_URL,
@@ -95,6 +101,7 @@ def sso_response(request):
     sso_session = request.POST.get('RelayState', None)
     data = request.POST.get('SAMLResponse', None)
     assertion = codex.decode_base64_and_inflate(data)
+    #TODO: Expand this next bit to process/translate attributes, too:
     user = _get_user_from_assertion(assertion)
     login(request, user)
     tv = {

@@ -1,5 +1,16 @@
 from django.conf import settings
 
+#TODO: Standardize these settings like the SAML2 settings are.
+try:
+    ACS_URL = settings.ACS_URL
+except:
+    ACS_URL = 'http://127.0.0.1:9000/sp/acs/'
+
+try:
+    SLO_URL = settings.SLO_URL
+except:
+    SLO_URL = 'http://127.0.0.1:8000/idp/logout/'
+
 try:
     IDP_REQUEST_URL = settings.IDP_REQUEST_URL
 except:
