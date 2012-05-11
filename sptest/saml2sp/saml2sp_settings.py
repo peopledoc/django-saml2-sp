@@ -23,3 +23,15 @@ try:
     SAML_USER_PASSWORD = settings.SAML_USER_PASSWORD
 except:
     SAML_USER_PASSWORD = settings.SECRET_KEY[::-1]
+
+# If using relative paths, be careful!
+try:
+    SAML2IDP_CERTIFICATE_FILE = settings.SAML2IDP_CERTIFICATE_FILE
+except:
+    SAML2IDP_CERTIFICATE_FILE = 'keys/certificate.pem'
+
+# If using relative paths, be careful!
+try:
+    SAML2SP_PRIVATE_KEY_FILE = settings.SAML2IDP_PRIVATE_KEY_FILE
+except:
+    SAML2SP_PRIVATE_KEY_FILE = 'keys/private-key.pem'

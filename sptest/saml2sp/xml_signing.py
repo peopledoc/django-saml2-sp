@@ -9,7 +9,7 @@ import string
 # other libraries:
 import M2Crypto
 # this app:
-import saml2idp_settings
+import saml2sp_settings
 from codex import nice64
 from xml_templates import SIGNED_INFO, SIGNATURE
 
@@ -17,8 +17,8 @@ def get_signature_xml(subject, reference_uri):
     """
     Returns XML Signature for subject.
     """
-    private_key_file = saml2idp_settings.SAML2IDP_PRIVATE_KEY_FILE
-    certificate_file = saml2idp_settings.SAML2IDP_CERTIFICATE_FILE
+    private_key_file = saml2sp_settings.SAML2SP_PRIVATE_KEY_FILE
+    certificate_file = saml2sp_settings.SAML2SP_CERTIFICATE_FILE
     logging.debug('get_signature_xml - Begin.')
     logging.debug('Using private key file: ' + private_key_file)
     logging.debug('Using certificate file: ' + certificate_file)

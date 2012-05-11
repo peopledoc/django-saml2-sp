@@ -62,8 +62,16 @@ def sso_login(request, request_url):
     """
     sso_destination = request.GET.get('next', None)
     request.session['sso_destination'] = sso_destination
+    parameters = {
     #TODO: Finish this:
-    request = get_authnrequest_xml(parameters, signed=False)
+        'ACS_URL': 'ACS_URL',
+        'DESTINATION': 'DESTINATION',
+        'AUTHN_REQUEST_ID': 'AUTHN_REQUEST_ID',
+        'ISSUE_INSTANT': 'ISSUE_INSTANT',
+        'ISSUER': 'ISSUER',
+
+    }
+    request = xml_render.get_authnrequest_xml(parameters, signed=False)
     token = sso_destination
     tv = {
         'request_url': request_url, #saml2sp_settings.IDP_REQUEST_URL,

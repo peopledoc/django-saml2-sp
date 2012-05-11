@@ -29,4 +29,4 @@ def _get_authnrequest_xml(template, parameters, signed=False):
     return signed
 
 def get_authnrequest_xml(parameters, signed=False):
-    return _get_assertion_xml(AUTHN_REQUEST, parameters, signed)
+    return _get_authnrequest_xml(AUTHN_REQUEST, parameters, signed)
