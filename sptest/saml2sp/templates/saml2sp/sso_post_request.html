@@ -5,7 +5,7 @@
 {{ next }}<br />
 Click Continue to sign in at the Identity Provider.
 </div>
-<form method="post" action="{{ request_url }}">
+<form method="POST" action="{{ request_url }}">
    <input type="hidden" name="SAMLRequest" value="{{ request }}" />
    <input type="hidden" name="RelayState" value="{{ token }}" />
    <input type="submit" value="Continue" />

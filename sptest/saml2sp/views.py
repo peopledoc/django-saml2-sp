@@ -71,7 +71,8 @@ def sso_login(request, request_url):
         'ISSUER': 'ISSUER',
 
     }
-    request = xml_render.get_authnrequest_xml(parameters, signed=False)
+    authn_req = xml_render.get_authnrequest_xml(parameters, signed=False)
+    request = base64.b64encode(authn_req)
     token = sso_destination
     tv = {
         'request_url': request_url, #saml2sp_settings.IDP_REQUEST_URL,

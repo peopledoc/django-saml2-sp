@@ -3,17 +3,14 @@ ACKNOWLEDGEMENTS
 First, special thanks for the idea and some starter code to:
 http://robinelvin.wordpress.com/2009/09/04/saml-with-django/
 
-PRE-REQUISITES
-==============
-To use the "saml2sp" app, you must download and install these libraries:
-- M2Crypto @ http://chandlerproject.org/bin/view/Projects/MeTooCrypto
-- PySAML @ http://github.com/tachang/PySAML
-
-UBUNTU Packages
+M2Crypto
 ===============
-M2Crypto is also available as a system package for Ubuntu (at least on 9.10).
+M2Crypto is available as a system package for Ubuntu (at least on 9.10).
 The name is 'python-m2crypto'. You can use the "Synaptic Package Manager" or
 the "apt-get" command-line program to install it.
+
+If that doesn't work, you can manually download and install it:
+- M2Crypto @ http://chandlerproject.org/bin/view/Projects/MeTooCrypto
 
 FOR PRE-EXISTING PROJECTS
 =========================
