@@ -6,9 +6,14 @@ except:
     SAML2SP_ACS_URL = 'http://127.0.0.1:9000/sp/acs/'
 
 try:
-    SAML2SP_SLO_URL = settings.SAML2SP_SLO_URL
+    SAML2SP_IDP_SLO_URL = settings.SAML2SP_IDP_SLO_URL
 except:
-    SAML2SP_SLO_URL = 'http://127.0.0.1:8000/idp/logout/'
+    SAML2SP_IDP_SLO_URL = 'http://127.0.0.1:8000/idp/logout/'
+
+try:
+    SAML2SP_IDP_AUTO_LOGOUT = settings.SAML2SP_IDP_AUTO_LOGOUT
+except:
+    SAML2SP_IDP_AUTO_LOGOUT = False
 
 try:
     SAML2SP_IDP_REQUEST_URL = settings.SAML2SP_IDP_REQUEST_URL

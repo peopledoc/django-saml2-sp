@@ -5,7 +5,7 @@ from xml.dom.minidom import parseString
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -129,3 +129,15 @@ def sso_test(request):
         'session': request.session,
     }
     return render_to_response('saml2sp/sso_test.html', tv)
+
+#@login_required
+def sso_single_logout(request):
+    """
+    Replies with an XHTML SSO Request.
+    """
+    logout(request)
+    tv = {
+        'idp_logout_url': saml2sp_settings.SAML2SP_IDP_SLO_URL,
+        'autosubmit': saml2sp_settings.SAML2SP_IDP_AUTO_LOGOUT,
+    }
+    return render_to_response('saml2sp/sso_single_logout.html', tv)
