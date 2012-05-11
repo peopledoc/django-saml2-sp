@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
 # Local imports
+import base
 import codex
 import saml2sp_settings
 import xml_render
@@ -18,7 +19,8 @@ import xml_render
 
 #TODO: Pull IDP choices from a model. For now, just use the one from the settings.
 IDP_CHOICES = (
-    (saml2sp_settings.IDP_REQUEST_URL, saml2sp_settings.IDP_REQUEST_URL),
+    (saml2sp_settings.SAML2SP_IDP_REQUEST_URL,
+     saml2sp_settings.SAML2SP_IDP_REQUEST_URL),
 )
 class IdpSelectionForm(forms.Form):
     idp = forms.ChoiceField(choices=IDP_CHOICES)
@@ -43,17 +45,17 @@ def _get_user_from_assertion(assertion):
     """
     email = _get_email_from_assertion(assertion)
     try:
-        user = User.objects.get(email = email)
+        user = User.objects.get(email=email)
     except:
         user = User.objects.create_user(
             _email_to_username(email),
             email,
-            saml2sp_settings.SAML_USER_PASSWORD
+            saml2sp_settings.SAML2SP_SAML_USER_PASSWORD
         )
     #NOTE: This next line will fail if the user has changed his password
     #      via the local account. This actually is a good thing, I think.
     user = authenticate(username=user.username,
-                        password=saml2sp_settings.SAML_USER_PASSWORD)
+                        password=saml2sp_settings.SAML2SP_SAML_USER_PASSWORD)
     return user
 
 def sso_login(request, request_url):
@@ -63,13 +65,11 @@ def sso_login(request, request_url):
     sso_destination = request.GET.get('next', None)
     request.session['sso_destination'] = sso_destination
     parameters = {
-    #TODO: Finish this:
-        'ACS_URL': 'ACS_URL',
-        'DESTINATION': 'DESTINATION',
-        'AUTHN_REQUEST_ID': 'AUTHN_REQUEST_ID',
-        'ISSUE_INSTANT': 'ISSUE_INSTANT',
-        'ISSUER': 'ISSUER',
-
+        'ACS_URL': saml2sp_settings.SAML2SP_ACS_URL,
+        'DESTINATION': sso_destination,
+        'AUTHN_REQUEST_ID': base.get_random_id(),
+        'ISSUE_INSTANT': base.get_time_string(),
+        'ISSUER': saml2sp_settings.SAML2SP_ACS_URL,
     }
     authn_req = xml_render.get_authnrequest_xml(parameters, signed=False)
     request = base64.b64encode(authn_req)
