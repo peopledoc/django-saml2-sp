@@ -58,7 +58,7 @@ def _get_user_from_assertion(assertion):
                         password=saml2sp_settings.SAML2SP_SAML_USER_PASSWORD)
     return user
 
-def sso_login(request, request_url):
+def sso_login(request, selected_idp_url):
     """
     Replies with an XHTML SSO Request.
     """
@@ -66,7 +66,7 @@ def sso_login(request, request_url):
     request.session['sso_destination'] = sso_destination
     parameters = {
         'ACS_URL': saml2sp_settings.SAML2SP_ACS_URL,
-        'DESTINATION': sso_destination,
+        'DESTINATION': selected_idp_url,
         'AUTHN_REQUEST_ID': base.get_random_id(),
         'ISSUE_INSTANT': base.get_time_string(),
         'ISSUER': saml2sp_settings.SAML2SP_ACS_URL,
@@ -75,10 +75,9 @@ def sso_login(request, request_url):
     request = base64.b64encode(authn_req)
     token = sso_destination
     tv = {
-        'request_url': request_url, #saml2sp_settings.IDP_REQUEST_URL,
+        'request_url': selected_idp_url,
         'request': request,
         'token': token,
-        'next': sso_destination,
     }
     return render_to_response('saml2sp/sso_post_request.html', tv)
 
@@ -109,7 +108,7 @@ def sso_response(request):
     #sso_session = request.session.get('sso_destination', None),
     sso_session = request.POST.get('RelayState', None)
     data = request.POST.get('SAMLResponse', None)
-    assertion = codex.decode_base64_and_inflate(data)
+    assertion = base64.b64decode(data)
     #TODO: Expand this next bit to process/translate attributes, too:
     user = _get_user_from_assertion(assertion)
     login(request, user)

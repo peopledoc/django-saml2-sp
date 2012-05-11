@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
 
-    (r'^sso/test/$', sso_test),
-    (r'^sso/idpselect/$', sso_idp_select),
-    (r'^sso/post/response/$', sso_response),
+    (r'^test/$', sso_test),
+    (r'^idpselect/$', sso_idp_select),
+    (r'^acs/$', sso_response),
 )
