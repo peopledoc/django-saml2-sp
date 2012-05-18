@@ -7,7 +7,10 @@ setup(
     author_email = 'john@andersoninnovative.com',
     description = 'SAML 2.0 SP for Django',
     long_description = 'SAML 2.0 Service Point app for Django projects.',
-    install_requires = ['M2Crypto>=0.20.1'],
+    install_requires = [
+        'M2Crypto>=0.20.1',
+        'BeautifulSoup>=3.2.0',
+    ],
     license = 'MIT',
     packages = ['saml2sp', 'saml2sp.tests'],
     package_dir = {'saml2sp': 'sptest/saml2sp'},
