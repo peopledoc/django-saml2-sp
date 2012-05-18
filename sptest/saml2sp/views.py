@@ -15,6 +15,7 @@ import base
 import codex
 import saml2sp_settings
 import xml_render
+import xml_signing
 
 def xml_response(request, template, tv):
     #TODO: Set content-type header and whatnot.
@@ -150,12 +151,11 @@ def descriptor(request):
     """
     Replies with the XML Metadata SPSSODescriptor.
     """
-    entity_id = None
-    slo_url = None
-    sso_url = None
-    pubkey = None
+    acs_url = saml2sp_settings.SAML2SP_ACS_URL
+    entity_id = saml2sp_settings.SAML2SP_ENTITY_ID
+    pubkey = xml_signing.load_cert_data(saml2sp_settings.SAML2SP_CERTIFICATE_FILE)
     tv = {
-        'acs_url': slo_url,
+        'acs_url': acs_url,
         'entity_id': entity_id,
         'cert_public_key': pubkey,
     }

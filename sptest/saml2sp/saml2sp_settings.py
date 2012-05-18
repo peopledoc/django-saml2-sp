@@ -6,6 +6,12 @@ except:
     SAML2SP_ACS_URL = 'http://127.0.0.1:9000/sp/acs/'
 
 try:
+    SAML2SP_ENTITY_ID = settings.SAML2SP_ENTITY_ID
+except:
+    # Default to the ACS_URL, if not specified.
+    SAML2SP_ENTITY_ID = SAML2SP_ACS_URL
+
+try:
     SAML2SP_IDP_SLO_URL = settings.SAML2SP_IDP_SLO_URL
 except:
     SAML2SP_IDP_SLO_URL = 'http://127.0.0.1:8000/idp/logout/'
@@ -32,10 +38,10 @@ except:
 try:
     SAML2SP_CERTIFICATE_FILE = settings.SAML2SP_CERTIFICATE_FILE
 except:
-    SAML2SP_CERTIFICATE_FILE = 'keys/certificate.pem'
+    SAML2SP_CERTIFICATE_FILE = 'keys/sample/certificate.pem'
 
 # If using relative paths, be careful!
 try:
     SAML2SP_PRIVATE_KEY_FILE = settings.SAML2SP_PRIVATE_KEY_FILE
 except:
-    SAML2SP_PRIVATE_KEY_FILE = 'keys/private-key.pem'
+    SAML2SP_PRIVATE_KEY_FILE = 'keys/sample/private-key.pem'
