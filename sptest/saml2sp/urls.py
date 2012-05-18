@@ -1,5 +1,11 @@
 from django.conf.urls.defaults import *
-from views import sso_response, sso_test, sso_idp_select, sso_single_logout
+from views import (
+    descriptor,
+    sso_idp_select,
+    sso_response,
+    sso_single_logout,
+    sso_test,
+)
 
 urlpatterns = patterns('',
     # Example:
@@ -16,4 +22,5 @@ urlpatterns = patterns('',
     (r'^idpselect/$', sso_idp_select),
     (r'^acs/$', sso_response),
     url(r'^singlelogout/$', sso_single_logout, name='sso_single_logout'),
+    (r'^metadata/xml/$', descriptor),
 )

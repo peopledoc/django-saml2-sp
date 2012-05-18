@@ -16,6 +16,10 @@ import codex
 import saml2sp_settings
 import xml_render
 
+def xml_response(request, template, tv):
+    #TODO: Set content-type header and whatnot.
+    return render_to_response(template, tv, mimetype="application/xml")
+
 
 #TODO: Pull IDP choices from a model. For now, just use the one from the settings.
 IDP_CHOICES = (
@@ -141,3 +145,18 @@ def sso_single_logout(request):
         'autosubmit': saml2sp_settings.SAML2SP_IDP_AUTO_LOGOUT,
     }
     return render_to_response('saml2sp/sso_single_logout.html', tv)
+
+def descriptor(request):
+    """
+    Replies with the XML Metadata SPSSODescriptor.
+    """
+    entity_id = None
+    slo_url = None
+    sso_url = None
+    pubkey = None
+    tv = {
+        'acs_url': slo_url,
+        'entity_id': entity_id,
+        'cert_public_key': pubkey,
+    }
+    return xml_response(request, 'saml2sp/spssodescriptor.xml', tv)
