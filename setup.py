@@ -10,7 +10,7 @@ setup(
     install_requires = ['M2Crypto>=0.20.1'],
     license = 'MIT',
     packages = ['saml2sp', 'saml2sp.tests'],
-    package_dir = {'saml2sp': 'idptest/saml2sp'},
+    package_dir = {'saml2sp': 'sptest/saml2sp'},
     package_data = {'saml2sp': ['templates/saml2sp/*.html']},
     url = 'http://code.google.com/p/django-saml2-sp/',
     zip_safe = True,
