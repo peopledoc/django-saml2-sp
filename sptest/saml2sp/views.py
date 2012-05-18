@@ -18,7 +18,6 @@ import xml_render
 import xml_signing
 
 def xml_response(request, template, tv):
-    #TODO: Set content-type header and whatnot.
     return render_to_response(template, tv, mimetype="application/xml")
 
 
