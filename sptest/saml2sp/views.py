@@ -29,6 +29,12 @@ IDP_CHOICES = (
 )
 class IdpSelectionForm(forms.Form):
     idp = forms.ChoiceField(choices=IDP_CHOICES)
+    
+def _get_entity_id(request):
+    entity_id = saml2sp_settings.SAML2SP_ENTITY_ID
+    if entity_id is None:
+        entity_id = request.build_absolute_uri(reverse('spssodescriptor'))
+    return entity_id
 
 def _get_email_from_assertion(assertion):
     """ Returns the email out of the assertion. """
@@ -74,7 +80,7 @@ def sso_login(request, selected_idp_url):
         'DESTINATION': selected_idp_url,
         'AUTHN_REQUEST_ID': base.get_random_id(),
         'ISSUE_INSTANT': base.get_time_string(),
-        'ISSUER': saml2sp_settings.SAML2SP_ACS_URL,
+        'ISSUER': _get_entity_id(request),
     }
     authn_req = xml_render.get_authnrequest_xml(parameters, signed=False)
     request = base64.b64encode(authn_req)
@@ -152,9 +158,7 @@ def descriptor(request):
     Replies with the XML Metadata SPSSODescriptor.
     """
     acs_url = saml2sp_settings.SAML2SP_ACS_URL
-    entity_id = saml2sp_settings.SAML2SP_ENTITY_ID
-    if entity_id is None:
-        entity_id = request.build_absolute_uri(reverse('spssodescriptor'))
+    entity_id = _get_entity_id(request)
     pubkey = xml_signing.load_cert_data(saml2sp_settings.SAML2SP_CERTIFICATE_FILE)
     tv = {
         'acs_url': acs_url,

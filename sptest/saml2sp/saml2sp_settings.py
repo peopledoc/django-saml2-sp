@@ -8,7 +8,7 @@ except:
 try:
     SAML2SP_ENTITY_ID = settings.SAML2SP_ENTITY_ID
 except:
-    # A value of None will default to the metadata URL, in the view.
+    # A value of None will default to the metadata URL, in the views.
     SAML2SP_ENTITY_ID = None
 
 try:
