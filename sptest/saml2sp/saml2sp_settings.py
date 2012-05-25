@@ -8,8 +8,8 @@ except:
 try:
     SAML2SP_ENTITY_ID = settings.SAML2SP_ENTITY_ID
 except:
-    # Default to the ACS_URL, if not specified.
-    SAML2SP_ENTITY_ID = SAML2SP_ACS_URL
+    # A value of None will default to the metadata URL, in the view.
+    SAML2SP_ENTITY_ID = None
 
 try:
     SAML2SP_IDP_SLO_URL = settings.SAML2SP_IDP_SLO_URL

@@ -6,9 +6,10 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_view_exempt
 # Local imports
 import base
@@ -152,6 +153,8 @@ def descriptor(request):
     """
     acs_url = saml2sp_settings.SAML2SP_ACS_URL
     entity_id = saml2sp_settings.SAML2SP_ENTITY_ID
+    if entity_id is None:
+        entity_id = request.build_absolute_uri(reverse('spssodescriptor'))
     pubkey = xml_signing.load_cert_data(saml2sp_settings.SAML2SP_CERTIFICATE_FILE)
     tv = {
         'acs_url': acs_url,

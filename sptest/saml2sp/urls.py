@@ -22,5 +22,5 @@ urlpatterns = patterns('',
     (r'^idpselect/$', sso_idp_select),
     (r'^acs/$', sso_response),
     url(r'^singlelogout/$', sso_single_logout, name='sso_single_logout'),
-    (r'^metadata/xml/$', descriptor),
+    url(r'^metadata/', descriptor, name='spssodescriptor'),
 )
