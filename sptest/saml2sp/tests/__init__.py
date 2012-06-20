@@ -1,3 +1,3 @@
 """
-Tests for the SAML 2.0 Service Point.
+Tests for the SAML 2.0 Service Provider.
 """

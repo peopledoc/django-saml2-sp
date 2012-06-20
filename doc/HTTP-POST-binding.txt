@@ -11,7 +11,7 @@ HOW IT WORKS - STEP BY STEP
 NOTE: All replies go to the Browser.
 URLs should work for the INTEGRATION setup described in INSTALL.txt:
 - The Identity Provider <IDP> is at http://localhost:8000
-- The Service Point <SP> is at http://localhost:9000
+- The Service Provider <SP> is at http://localhost:9000
 
 1 - Browser sends GET request for Resource to SP.
     * GET http://localhost:9000/sp/sso/test/

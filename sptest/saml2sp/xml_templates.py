@@ -1,5 +1,5 @@
 """
-XML string templates for SAML 2.0 Service Point AuthnRequest.
+XML string templates for SAML 2.0 Service Provider AuthnRequest.
 
 NOTE #1: OK, encoding XML into python is not optimal.
     However, this is the easiest way to get canonical XML...
