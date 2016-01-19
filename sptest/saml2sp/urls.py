@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import url
 from views import (
     descriptor,
     sso_idp_select,
@@ -7,7 +7,7 @@ from views import (
     sso_test,
 )
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Example:
     # (r'^sptest/', include('sptest.foo.urls')),
 
@@ -18,9 +18,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
 
-    (r'^test/$', sso_test),
-    (r'^idpselect/$', sso_idp_select),
-    (r'^acs/$', sso_response),
+    url(r'^test/$', sso_test),
+    url(r'^idpselect/$', sso_idp_select),
+    url(r'^acs/$', sso_response),
     url(r'^singlelogout/$', sso_single_logout, name='sso_single_logout'),
     url(r'^metadata/', descriptor, name='spssodescriptor'),
-)
+]
