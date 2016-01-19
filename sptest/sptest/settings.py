@@ -109,3 +109,4 @@ STATIC_URL = '/static/'
 #           samp2sp Configure
 # ------------------------------------------------------------
 LOGIN_URL = '/sp/idpselect/'
+SAML2SP_SAML_USER_PASSWORD = 'demo'

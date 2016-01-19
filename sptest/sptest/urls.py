@@ -13,5 +13,5 @@ except:
 urlpatterns = [
     url(r'^' + logout_url, logout, name='logout_url'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^sp/', include('sptest.saml2sp.urls')),
+    url(r'^sp/', include('saml2sp.urls')),
 ]
