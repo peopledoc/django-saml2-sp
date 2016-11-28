@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.decorators.csrf import csrf_view_exempt
+from django.views.decorators.csrf import csrf_exempt
 # Other imports
 from BeautifulSoup import BeautifulStoneSoup
 # Local imports
@@ -154,7 +154,7 @@ def sso_idp_select(request):
         context_instance=RequestContext(request))
 
 
-@csrf_view_exempt
+@csrf_exempt
 def sso_response(request):
     """
     Handles a POSTed SSO Assertion and logs the user in.
